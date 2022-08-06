@@ -12,6 +12,7 @@ const ButtonWrapper = styled.button`
   border: none;
   border-radius: 12px;
   padding: 0.75rem;
+  cursor: pointer;
 `
 
 function Button({text, onClick}) {

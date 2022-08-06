@@ -8,6 +8,7 @@ const ChatResponseContainer = styled.div`
   margin: 0.5rem 0;
   margin-left: auto;
   border-radius: 12px;
+  white-space: pre-line;
 `
 
 function ChatResponse({message}) {

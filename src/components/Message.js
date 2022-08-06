@@ -1,10 +1,10 @@
 import React, {cloneElement} from 'react'
 
-function Message({children, setMessages, handleInputChange, onClick}) {
+function Message({children, handleInputChange, onClick}) {
   return (
     <>
       {cloneElement(children, {
-        setMessages, handleInputChange, onClick
+        handleInputChange, onClick
       })}
     </>
   )
