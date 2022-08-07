@@ -12,7 +12,7 @@ const ChatConfirmationContainer = styled.div`
 function ChatConfirmation() {
   return (
     <ChatConfirmationContainer>
-      Si tus datos son correctos por favor continuemos
+      Si tus datos son correctos por favor continuemos, de otra forma de click en el boton de reiniciar formulario.
     </ChatConfirmationContainer>
   )
 }

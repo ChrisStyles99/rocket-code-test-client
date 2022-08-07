@@ -13,7 +13,7 @@ const ChatContainer = styled.div`
 
 function Chat() {
 
-  const { messages, handleInputChange, nextForm, start } = useMessages();
+  const { messages, handleInputChange, nextForm, start, isError } = useMessages();
 
   return (
     <ChatContainer>
@@ -22,7 +22,9 @@ function Chat() {
           {message}
         </Message>
       ))}
-      {messages.length === 7 && <Button onClick={start} text="Iniciar" />}
+      {messages.length === 7 && <Button onClick={start} text="Iniciar" isSave={true} />}
+      {messages.length === 7 && <Button onClick={() => window.location.reload()} text="Reiniciar formulario" isSave={false} />}
+      {isError && <Button onClick={() => window.location.reload()} text="Reiniciar el formulario" isSave={false} />}
     </ChatContainer>
   )
 }

@@ -11,21 +11,26 @@ const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", 
 
 export const useMessages = () => {
   const [messages, setMessages] = useState([<ChatFormName />]);
+  const [isError, setIsError] = useState(false);
+
   const { formData, handleInputChange } = useForm({firstName: '', middleName: '', fatherLastName: '', motherLastName: '', 
         day: '', month: '', year: '', email: '', phone: ''});
 
   const nextForm = () => {
     console.log(formData);
     if(messages.length === 1) {
+      if(!formData.firstName || !formData.fatherLastName) return toast('Por favor llene todos los campos requeridos', {autoClose: true, position: 'top-center', type: 'error', theme: 'colored'})
       setMessages([...messages, 
       <ChatResponse message={`${formData.firstName} ${formData.middleName} ${formData.fatherLastName} ${formData.motherLastName}`} />,
       <ChatFormBirthday />
     ])
     } else if(messages.length === 3) {
+      if(!formData.day || !formData.month || !formData.year) return toast('Por favor llene todos los campos requeridos', {autoClose: true, position: 'top-center', type: 'error', theme: 'colored'})
       setMessages([...messages,
       <ChatResponse message={`${formData.day} ${months[parseInt(formData.month) - 1]} ${formData.year}`} />,
       <ChatFormContact />])
     } else if(messages.length === 5) {
+      if(!formData.email || !formData.phone) return toast('Por favor llene todos los campos requeridos', {autoClose: true, position: 'top-center', type: 'error', theme: 'colored'})
       setMessages([...messages,
         <ChatResponse message={`Correo electronico ${formData.email}
         Telefono celular: ${formData.phone}`} />,
@@ -50,16 +55,29 @@ export const useMessages = () => {
         'Content-Type': 'application/json'
       }
     }).then(res => res.json()).then(data => {
-      console.log(data);
+      if(data.error) {
+        toast(data.message, {
+          autoClose: true,
+          type: "error",
+          position: "top-center",
+          theme: 'colored'
+        });
+        setIsError(true);
+        return;
+      }
       toast(data.message, {
         autoClose: true,
         type: "success",
-        position: "bottom-center"
+        position: "top-center",
+        theme: 'colored'
       });
-    });
+      Object.keys(formData).forEach((data, index) => {
+        sessionStorage.setItem(data, Object.values(formData)[index])
+      });
+    })
   }
 
   return {
-    messages, handleInputChange, nextForm, start
+    messages, handleInputChange, nextForm, start, isError
   }
 }

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 const ButtonWrapper = styled.button`
   display: block;
-  background-color: #f024af;
-  width: 90%;
+  background-color: ${props => props.isSave ? '#f024af' : '#8f8f8f'};
+  width: ${props => props.isSave ? '90%' : '50%'};
   margin: 1rem auto;
   font-size: 1.25rem;
   color: #fff;
@@ -15,9 +15,9 @@ const ButtonWrapper = styled.button`
   cursor: pointer;
 `
 
-function Button({text, onClick}) {
+function Button({text, onClick, isSave}) {
   return (
-    <ButtonWrapper onClick={onClick}>{text}</ButtonWrapper>
+    <ButtonWrapper isSave={isSave} onClick={onClick}>{text}</ButtonWrapper>
   )
 }
 
